@@ -28,7 +28,7 @@ BLACK = (0,0,0)
 # File for saving scores
 SCORES_FILE = "scores.txt"
 
-class Don:
+class Don: #les Don sont les cibles qui défilent
     def __init__(self, x, y, radius, color, speed):
         self.x = x
         self.y = y
@@ -45,7 +45,7 @@ class Don:
     def get_rect(self):
         return pygame.Rect(self.x - self.radius, self.y - self.radius, self.radius * 2, self.radius * 2)
 
-class Game:
+class Game: #c'est ici que se déroule la partie
     def __init__(self, player_name):
         self.dons = []
         self.time_counter = 0
@@ -81,7 +81,7 @@ class Game:
         # Temps de jeu
         self.start_time = pygame.time.get_ticks()  # Temps de départ du jeu
     
-    def save_score(self, score, best_streak, game_time, click_count, cumul_error):
+    def save_score(self, score, best_streak, game_time, click_count, cumul_error): #cette fonction enregistre les fichiers csv
         # Créer un fichier CSV pour chaque joueur
         filename = f"{self.player_name}.csv"
         
@@ -97,7 +97,7 @@ class Game:
             # Ajouter la ligne avec la date, le score, le meilleur streak, le temps de jeu, les clics et les erreurs
             writer.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S'), score, best_streak, game_time, click_count, cumul_error])
 
-    def save_score_txt(self, name, score):
+    def save_score_txt(self, name, score): #ce fichier txt permet d'avoir tous les scores au meme endroit pour le leaderboard
         with open(SCORES_FILE, "a") as file:
             file.write(f"{name},{score}\n")
 
@@ -112,7 +112,7 @@ class Game:
                         self.save_score(self.score, self.beststreak, game_time, self.click_count, self.cumul_error)  # Sauvegarde du score avant de quitter
                         return "menu"
                     self.paused = not self.paused
-                elif event.key == pygame.K_p:
+                elif event.key == pygame.K_p:           #ICI se trouve la pause en appuyant sur P
                     self.paused = not self.paused
                 elif event.key == pygame.K_RETURN and self.game_over:
                     game_time = (pygame.time.get_ticks() - self.start_time) / 1000  # Temps en secondes
@@ -212,7 +212,7 @@ class Game:
                     self.key_pressed = True
                     self.click_count+=1
                 elif button_input == "red":
-                    self.control_color = RED
+                    self.control_color = RED 
                     self.key_pressed = True
                     self.click_count+=1
                 elif button_input == "gray":
@@ -221,12 +221,12 @@ class Game:
             except:
                 pass
 
-class Menu:
+class Menu: 
     def __init__(self):
         self.selected_option = 0
-        self.options = ["Play", "Leaderboard", "Quit"]
+        self.options = ["Play", "Leaderboard", "Quit"] 
 
-    def handle_events(self):
+    def handle_events(self): #on peut defiler dans le menu avec les fleches
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return "quit"
@@ -256,14 +256,14 @@ class Menu:
             text_rect = text.get_rect(center=(screen.get_width() // 2, 250 + i * 100))
             screen.blit(text, text_rect)
 
-class Leaderboard:
+class Leaderboard: #le leaderboard classe les joueurs avec leur score du meilleur au pire
     def __init__(self):
         self.leaderboard_data = self.load_leaderboard()
 
     def load_leaderboard(self):
-        if not os.path.exists(SCORES_FILE):
+        if not os.path.exists(SCORES_FILE): 
             return []
-        with open(SCORES_FILE, "r") as file:
+        with open(SCORES_FILE, "r") as file: #on recupère les scores dans scores.txt
             data = [line.strip().split(",") for line in file.readlines()]
         return [(name, score) for name, score in data]
     
@@ -293,7 +293,7 @@ class Leaderboard:
         back_rect = back_text.get_rect(center=(screen.get_width() // 2, screen.get_height() - 50))
         screen.blit(back_text, back_rect)
 
-class NameInput:
+class NameInput: #cette classe est la page qui permet d'inscrire le nom du joueur
     def __init__(self):
         self.name = ""
         self.active = True
@@ -335,7 +335,7 @@ def main():
         elif game_state == "name_input":
             player_name = name_input.handle_events()
             if player_name:
-                game = Game(player_name)  # On passe l'instance de leaderboard à la classe Game
+                game = Game(player_name)  
                 game_state = "game"
             name_input.draw(screen)
         elif game_state == "game":

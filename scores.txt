@@ -2,3 +2,5 @@ dd,64
 i,42
 moi,6
 suva,13
+d,0
+loezig,71
