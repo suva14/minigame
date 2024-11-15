@@ -2,7 +2,8 @@
 
 ## **Description**
 Un jeu de réaction développé en Python avec `pygame`, où le joueur doit interagir rapidement avec des éléments pour marquer des points. Les scores et statistiques des joueurs sont enregistrés dans des fichiers CSV, analysés et visualisés à l'aide de `matplotlib` et `pandas`.
-
+## **Vidéo**
+https://youtube.com/shorts/6e4EdpxkCJM?feature=share
 ## **Classes Principales**
 
 ### **1. `Don`**
